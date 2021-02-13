@@ -1,6 +1,14 @@
 # Jira Menu Bar App
 
-Shows Jira tickets assigned to a user. Could be customized to show a list of ticket for a given JQL.
+Shows a list of Jira tickets grouped by a status which are assigned to a user:
+
+![screenshot](./screenshots/jira.png)
+
+By default it shows a list of tickets returned by a following JQL: 
+
+```assignee=currentuser()+AND+resolution=Unresolved```
+
+In order to show a different list (for example issues from the backlog or issues with a label) go to Jira's advanced search, construct a query and use it in the app's config.
 
 # Installation
 

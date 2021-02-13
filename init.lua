@@ -2,10 +2,10 @@ local obj = {}
 obj.__index = obj
 
 -- Metadata
-obj.name = "Spoonira"
+obj.name = "jira-issues"
 obj.version = "1.0"
 obj.author = "Pavel Makhov"
-obj.homepage = "https://github.com/streetturtle/spoonify"
+obj.homepage = "https://github.com/fork-my-spoons/jira-issues.spoon"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
 obj.indicator = nil
