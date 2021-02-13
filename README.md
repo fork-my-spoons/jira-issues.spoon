@@ -10,14 +10,14 @@ Shows Jira tickets assigned to a user. Could be customized to show a list of tic
 
 ```lua
 -- JIRA
-hs.loadSpoon("jira")
-spoon.jira:setup({
+hs.loadSpoon('jira-issues')
+spoon['jira-issues']:setup({
     jira_host = 'https://jira.tmnt.ca',
     login = 'mikey',
     password = 'cowabunga123',
-    jql = 'project = tmnt'
+    jql = 'project=tmnt'
 })
-spoon.jira:start()
+spoon['jira-issues']:start()
 ```
 
-This app uses icons, to properly display them, install a [feather-font](https://github.com/AT-UI/feather-font) by [downloading](https://github.com/AT-UI/feather-font/raw/master/src/fonts/feather.ttf1) this .ttf font and installing it.
+This app uses icons, to properly display them, install a [feather-font](https://github.com/AT-UI/feather-font) by [downloading](https://github.com/AT-UI/feather-font/raw/master/src/fonts/feather.ttf) this .ttf font and installing it.
