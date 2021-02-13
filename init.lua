@@ -18,7 +18,7 @@ obj.passowrd = nil
 obj.iconPath = hs.spoons.resourcePath("icons")
 
 local function show_warning(status, body)
-    hs.alert(string.format('Jira spoon Error: received status: %s error message: %s', status, body))
+    hs.alert(string.format('Jira Spoon Error: received status: %s', status))
 end
 
 local user_icon = hs.styledtext.new(' ', { font = {name = 'feather', size = 12 }, color = {hex = '#8e8e8e'}})
@@ -30,9 +30,9 @@ end
 
 local function updateMenu()
     local jira_url = obj.jira_host .. '/rest/api/2/search?jql=' .. obj.jql
-    hs.http.asyncGet(jira_url, {Authorization = 'Basic ' .. hs.base64.encode(string.format('%s:%s', obj.login, obj.password))}, function(status, body) 
+    hs.http.asyncGet(jira_url, {Authorization = 'Basic ' .. hs.base64.encode(string.format('%s:%s', obj.login, obj.password))}, function(status, body)
         if status ~=200 then
-            show_warning(status, body)
+            show_warning(status)
             return
         end
         
@@ -76,7 +76,7 @@ end
 
 function obj:init()
     self.indicator = hs.menubar.new()
-    self.indicator:setIcon(hs.image.imageFromPath(obj.iconPath .. '/jira-mark-gradient-blue.png'):setSize({w=16,h=16}), false)
+    self.indicator:setIcon(hs.image.imageFromPath(obj.iconPath .. '/jira-mark-gradient-blue.png'):setSize({w=16,h=16}), true)
 
     self.timer = hs.timer.new(300, updateMenu)
 end
