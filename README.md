@@ -13,7 +13,7 @@ In order to show a different list (for example issues from the backlog or issues
 # Installation
 
  - download and install [Hammerspoon](https://github.com/Hammerspoon/hammerspoon/releases/latest)
- - download and install [Jira Spoon]()
+ - download and install [jira-issues.spoon](https://github.com/fork-my-spoons/jira-issues.spoon/raw/main/jira-issues.spoon.zip)
  - open ~/.hammerspoon/init.lua and add following snippet:
 
 ```lua
