@@ -22,7 +22,7 @@ In order to show a different list (for example issues from the backlog or issues
 
       ```brew install hammerspoon --cask```
 
- - download [jira-issues-requests.spoon](https://github.com/fork-my-spoons/jira-issues.spoon/raw/main/jira-issues.spoon.zip), unzip and double click on a .spoon file. It will be installed under `~/.hammerspoon/Spoons` folder.
+ - download [jira-issues.spoon](https://github.com/fork-my-spoons/jira-issues.spoon/raw/main/jira-issues.spoon.zip), unzip and double click on a .spoon file. It will be installed under `~/.hammerspoon/Spoons` folder.
  
  - open ~/.hammerspoon/init.lua and add the following snippet, with your parameters:
  
