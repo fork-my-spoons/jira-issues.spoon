@@ -68,7 +68,9 @@ local function updateMenu()
             local transitions_submenu = {}
             hs.http.asyncGet(transitions_url, {Authorization = auth_header}, function(status, body)
 
-                if status == 200 then
+                if status ~= 200 then
+                    show_warning(status, body)
+                else
                     local transitions = hs.json.decode(body).transitions
                     for _, transition in ipairs(transitions) do
                         local transition_payload = string.format([[{ "transition": { "id": "%s" } }]], transition.id)
@@ -122,7 +124,7 @@ end
 
 function obj:setup(args)
     self.jira_host = args.jira_host
-    auth_header = 'Basic ' .. hs.base64.encode(string.format('%s:%s', args.login, args.password))
+    auth_header = 'Basic ' .. hs.base64.encode(string.format('%s:%s', args.login, args.api_token))
     if args.jql ~= nil then obj.jql = hs.http.encodeForQuery(args.jql) .. '&fields=id,assignee,summary,status' end
 end
 

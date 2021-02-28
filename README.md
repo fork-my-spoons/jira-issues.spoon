@@ -1,6 +1,6 @@
 # Jira Menu Bar App
 
-Shows a list of Jira tickets grouped by a status which are assigned to a user:
+Shows a list of Jira tickets assigned to a user and grouped by a status. It's also possible to transition selected ticket to a different status.
 
 <p align="center">
   <img src="https://github.com/fork-my-spoons/jira-issues.spoon/raw/main/screenshots/jira.png"/>
@@ -32,7 +32,7 @@ hs.loadSpoon('jira-issues')
 spoon['jira-issues']:setup({
     jira_host = 'https://jira.tmnt.ca',
     login = 'mikey',
-    password = 'cowabunga123',   
+    api_token = 'cowabunga123',   
 })
 spoon['jira-issues']:start()
 ```
@@ -45,10 +45,11 @@ hs.loadSpoon('jira-issues')
 spoon['jira-issues']:setup({
     jira_host = 'https://jira.tmnt.ca',
     login = 'mikey',
-    password = 'cowabunga123',
+    api_token = 'cowabunga123',
     jql = 'project = TMNT AND status = Open AND assignee in (EMPTY)'
 })
 spoon['jira-issues']:start()
 ```
 
+Here is atlassian documentation on how to get an API token: [Manage API tokens for your Atlassian account](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/). In case you are using an old version of Jira, simply put your password instead of an API token.  
 This app uses icons, to properly display them, install a [feather-font](https://github.com/AT-UI/feather-font) by [downloading](https://github.com/AT-UI/feather-font/raw/master/src/fonts/feather.ttf) this .ttf font and installing it.
