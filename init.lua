@@ -106,12 +106,7 @@ local function updateMenu()
 end
 
 function obj:buildMenu()
-    local ret = {}
-    for _,v in ipairs(obj.jira_menu) do 
-        table.insert(ret, v)
-    end
-
-    return ret
+    return obj.jira_menu
 end
 
 function obj:init()
