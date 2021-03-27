@@ -1,5 +1,14 @@
 # Jira Menu Bar App
 
+<p align="center">
+   <a href="https://github.com/fork-my-spoons/jira-issues.spoon/issues">
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues/fork-my-spoons/jira-issues.spoon">
+  </a>
+  <a href="https://github.com/fork-my-spoons/jira-issues.spoon/releases">
+    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/fork-my-spoons/jira-issues.spoon/total">
+  </a>
+</p>
+
 Shows a list of Jira tickets assigned to a user and grouped by a status. It's also possible to transition selected ticket to a different status.
 
 <p align="center">
@@ -22,7 +31,7 @@ In order to show a different list (for example issues from the backlog or issues
 
       ```brew install hammerspoon --cask```
 
- - download [jira-issues.spoon](https://github.com/fork-my-spoons/jira-issues.spoon/raw/main/jira-issues.spoon.zip), unzip and double click on a .spoon file. It will be installed under `~/.hammerspoon/Spoons` folder.
+ - download [jira-issues.spoon](https://github.com/fork-my-spoons/jira-issues.spoon/releases/download/v1.0/jira-issues.spoon.zip), unzip and double click on a .spoon file. It will be installed under `~/.hammerspoon/Spoons` folder.
  
  - open ~/.hammerspoon/init.lua and add the following snippet, with your parameters:
  
