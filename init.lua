@@ -11,7 +11,7 @@ obj.license = "MIT - https://opensource.org/licenses/MIT"
 obj.indicator = nil
 obj.timer = nil
 obj.jira_host = nil
-obj.jql = 'assignee=currentuser()+AND+resolution=Unresolved&fields=id,assignee,summary,status'
+obj.jql = 'assignee=currentuser() AND resolution=Unresolved'
 obj.jira_menu = {}
 obj.icon_type = nil
 obj.iconPath = hs.spoons.resourcePath("icons")
@@ -34,7 +34,7 @@ local function styledText(text)
 end
 
 local function updateMenu()
-    local jira_url = obj.jira_host .. '/rest/api/2/search?jql=' .. obj.jql
+    local jira_url = obj.jira_host .. '/rest/api/2/search?jql=' .. hs.http.encodeForQuery(obj.jql) .. '&fields=id,assignee,summary,status'
     hs.http.asyncGet(jira_url, {Authorization = auth_header}, function(status, body)
         obj.jira_menu = {}
 
@@ -101,7 +101,24 @@ local function updateMenu()
         end
         
         table.insert(obj.jira_menu, { title = '-'})
-        table.insert(obj.jira_menu, { title = 'Refresh', fn = function() updateMenu() end})
+        table.insert(obj.jira_menu, { 
+            image = hs.image.imageFromName('NSTouchBarSearchTemplate'),
+            title = 'Open filter', 
+            fn = function() 
+                local url = string.format('open "%s/issues/?jql=%s"', obj.jira_host, hs.http.encodeForQuery(obj.jql))
+                print(url)
+                os.execute(url) 
+            end})
+        table.insert(obj.jira_menu, { 
+            image = hs.image.imageFromName('NSAddTemplate'), 
+            title = 'Create issue', 
+            fn = function() os.execute(string.format('open %s/secure/CreateIssue.jspa', obj.jira_host)) end
+        })
+        table.insert(obj.jira_menu, { 
+            image = hs.image.imageFromName('NSRefreshTemplate'), 
+            title = 'Refresh', 
+            fn = function() updateMenu() end
+        })
     end)
 end
 
@@ -113,14 +130,14 @@ function obj:init()
     self.indicator = hs.menubar.new()
     self.indicator:setIcon(hs.image.imageFromPath(obj.iconPath .. '/jira-mark-gradient-blue.png'):setSize({w=16,h=16}), true)
     obj.indicator:setMenu(self.buildMenu)
-
+    
     self.timer = hs.timer.new(300, updateMenu)
 end
 
 function obj:setup(args)
     self.jira_host = args.jira_host
     auth_header = 'Basic ' .. hs.base64.encode(string.format('%s:%s', args.login, args.api_token))
-    if args.jql ~= nil then obj.jql = hs.http.encodeForQuery(args.jql) .. '&fields=id,assignee,summary,status' end
+    if args.jql ~= nil then obj.jql = args.jql end
 end
 
 function obj:start()
