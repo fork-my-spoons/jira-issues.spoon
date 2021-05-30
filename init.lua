@@ -3,7 +3,7 @@ obj.__index = obj
 
 -- Metadata
 obj.name = "jira-issues"
-obj.version = "1.0"
+obj.version = "1.2"
 obj.author = "Pavel Makhov"
 obj.homepage = "https://github.com/fork-my-spoons/jira-issues.spoon"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
@@ -100,25 +100,54 @@ local function updateMenu()
             })
         end
         
-        table.insert(obj.jira_menu, { title = '-'})
+        table.insert(obj.jira_menu, { title = '-' })
         table.insert(obj.jira_menu, { 
             image = hs.image.imageFromName('NSTouchBarSearchTemplate'),
             title = 'Open filter', 
             fn = function() 
-                local url = string.format('open "%s/issues/?jql=%s"', obj.jira_host, hs.http.encodeForQuery(obj.jql))
-                print(url)
-                os.execute(url) 
+                os.execute(string.format('open "%s/issues/?jql=%s"', obj.jira_host, hs.http.encodeForQuery(obj.jql))) 
             end})
         table.insert(obj.jira_menu, { 
             image = hs.image.imageFromName('NSAddTemplate'), 
             title = 'Create issue', 
             fn = function() os.execute(string.format('open %s/secure/CreateIssue.jspa', obj.jira_host)) end
         })
+        table.insert(obj.jira_menu, { title = '-' })
         table.insert(obj.jira_menu, { 
             image = hs.image.imageFromName('NSRefreshTemplate'), 
             title = 'Refresh', 
             fn = function() updateMenu() end
         })
+        table.insert(obj.jira_menu, { 
+            image = hs.image.imageFromName('NSTouchBarDownloadTemplate'), 
+            title = 'Check for updates', 
+            fn = function() obj:check_for_updates() end})
+    end)
+end
+
+function obj:check_for_updates()
+    local release_url = 'https://api.github.com/repos/fork-my-spoons/jira-issues.spoon/releases/latest'
+    hs.http.asyncGet(release_url, {}, function(status, body)
+        local latest_release = hs.json.decode(body)
+        latest = latest_release.tag_name:sub(2)
+        
+        if latest == obj.version then
+            hs.notify.new(function() end, {
+                autoWithdraw = false,
+                title = 'Jira Issues Spoon',
+                informativeText = "You have the latest version installed!"
+            }):send()
+        else
+            hs.notify.new(function() 
+                os.execute('open ' .. latest_release.assets[1].browser_download_url)
+            end, 
+            {
+                title = 'Jira Issues Spoon',
+                informativeText = "New version is available",
+                actionButtonTitle = "Download",
+                hasActionButton = true
+            }):send()
+        end
     end)
 end
 
