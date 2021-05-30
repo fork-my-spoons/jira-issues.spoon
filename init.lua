@@ -58,7 +58,7 @@ local function updateMenu()
             
             local avatar = (issue.fields.assignee == nil)
                 and hs.image.imageFromPath(obj.iconPath .. '/unassigned.png')
-                or hs.image.imageFromURL(issue.fields.assignee.avatarUrls['32x32'])
+                or hs.image.imageFromURL(issue.fields.assignee.avatarUrls['32x32']):setSize({w=32,h=32})
             local assignee_name = (issue.fields.assignee == nil)
                 and styledText('Unassigned')
                 or styledText(issue.fields.assignee.displayName)
