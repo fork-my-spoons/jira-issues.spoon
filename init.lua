@@ -26,8 +26,8 @@ local function show_warning(status, body)
     }):send()
 end
 
-local user_icon = hs.styledtext.new(' ', { font = {name = 'feather', size = 12 }, color = {hex = '#8e8e8e'}})
-local ticket_icon = hs.styledtext.new(' ', { font = {name = 'feather', size = 12 }, color = {hex = '#8e8e8e'}})
+local user_icon = hs.styledtext.new(' ', { font = {name = 'icomoon', size = 12 }, color = {hex = '#8e8e8e'}})
+local ticket_icon = hs.styledtext.new(' ', { font = {name = 'icomoon', size = 12 }, color = {hex = '#8e8e8e'}})
 
 local function styledText(text)
     return hs.styledtext.new(text, {color = {hex = '#8e8e8e'}})
@@ -165,7 +165,11 @@ end
 
 function obj:setup(args)
     self.jira_host = args.jira_host
-    auth_header = 'Basic ' .. hs.base64.encode(string.format('%s:%s', args.login, args.api_token))
+    if args.api_token ~= nil then
+        auth_header = 'Basic ' .. hs.base64.encode(string.format('%s:%s', args.login, args.api_token))
+    else
+        auth_header = 'Bearer ' .. args.pat_token
+    end
     if args.jql ~= nil then obj.jql = args.jql end
 end
 
