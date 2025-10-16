@@ -3,7 +3,7 @@ obj.__index = obj
 
 -- Metadata
 obj.name = "jira-issues"
-obj.version = "1.2"
+obj.version = "1.3"
 obj.author = "Pavel Makhov"
 obj.homepage = "https://github.com/fork-my-spoons/jira-issues.spoon"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
@@ -34,7 +34,7 @@ local function styledText(text)
 end
 
 local function updateMenu()
-    local jira_url = obj.jira_host .. '/rest/api/2/search?jql=' .. hs.http.encodeForQuery(obj.jql) .. '&fields=id,assignee,summary,status'
+    local jira_url = obj.jira_host .. '/rest/api/3/search/jql?jql=' .. hs.http.encodeForQuery(obj.jql) .. '&fields=id,assignee,summary,status'
     hs.http.asyncGet(jira_url, {Authorization = auth_header}, function(status, body)
         obj.jira_menu = {}
 
@@ -63,7 +63,7 @@ local function updateMenu()
                 and styledText('Unassigned')
                 or styledText(issue.fields.assignee.displayName)
             
-            local transitions_url = obj.jira_host .. '/rest/api/2/issue/' .. issue.key .. '/transitions'
+            local transitions_url = obj.jira_host .. '/rest/api/3/issue/' .. issue.key .. '/transitions'
             
             local transitions_submenu = {}
             hs.http.asyncGet(transitions_url, {Authorization = auth_header}, function(status, body)
